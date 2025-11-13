@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TravelNow - Descubrí tu próximo destino</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      background-color: #000;
+      scroll-behavior: smooth;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      scrollbar-width: none;
+    }
+
+    /* 🌍 SECCIÓN HERO CON VIDEO */
+    .hero {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    /* 🎥 VIDEO DE FONDO */
+    #video-fondo {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* 🔹 CAPA OSCURA SOBRE EL VIDEO */
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    /* 🔹 MENÚ SUPERIOR */
+    .menu {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    .menu a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    .menu a:hover {
+      color: #00bcd4;
+    }
+
+    /* 🔹 CONTENIDO CENTRAL DEL ENCABEZADO */
+    .contenido-hero {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    #titulo-logo {
+      font-family: "Playfair Display", serif;
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 5em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: aparecer 1.5s ease-in-out;
+      color: burlywood;
+    }
+
+    #titulo-logo2 {
+      font-family: "Playfair Display", serif;
+      position: absolute;
+      top: 47%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: aparecer 1.5s ease-in-out;
+      color: #fff;
+    }
+
+    .resaltado {
+      font-weight: bold;
+    }
+
+    #titulo-logo img {
+      width: 130px;
+      height: 120px;
+      margin-right: 15px;
+      vertical-align: middle;
+    }
+
+    .contenido-hero p {
+      position: absolute;
+      top: 70%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.5em;
+      animation: aparecer 2s ease-in-out;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 🔹 SECCIONES GENERALES */
+    .seccion {
+      padding: 60px 20px;
+      text-align: center;
+      background-color: #4d4d4d;
+    }
+
+    .galeria .imagenes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .galeria img {
+      width: 100%;
+      border-radius: 10px;
+      transition: transform 0.3s;
+    }
+
+    .galeria img:hover {
+      transform: scale(1.05);
+    }
+
+    .mares img, .ciudades img, .monumentos img, .Naturaleza img {
+      transition: transform 0.3s;
+    }
+
+    .mares img:hover, .ciudades img:hover, .monumentos img:hover, .Naturaleza img:hover {
+      transform: scale(1.05);
+    }
+
+    .mares .imagenes, .ciudades .imagenes, .monumentos .imagenes, .Naturaleza .imagenes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      border-radius: 10px;
+      margin-top: 10px;
+      padding: 5px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    input, textarea {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      width: 100%;
+    }
+
+    button {
+      padding: 10px;
+      background-color: #00bcd4;
+      border: none;
+      color: white;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0097a7;
+    }
+
+    footer {
+      background-color: #000;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+      color: #888;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- MÚSICA DE FONDO -->
+  <audio id="musica-fondo" loop>
+    <source src="musica.mp3" type="audio/mp3">
+  </audio>
+
+  <script>
+    window.addEventListener("click", () => {
+      const musica = document.getElementById("musica-fondo");
+      musica.volume = 0.05;
+      musica.play();
+    });
+  </script>
+
+  <!-- ENCABEZADO CON VIDEO -->
+  <header class="hero">
+    <video autoplay muted loop playsinline id="video-fondo">
+      <source src="fondo.mp4" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+
+    <div class="contenido-hero">
+      <h1 id="titulo-logo">
+        <img src="logo.png" alt="Logo de TravelNow">
+        TravelNow
+      </h1>
+      <h2 id="titulo-logo2">Viajes</h2>
+      <p>Tu próxima <span class="resaltado">aventura</span> comienza aquí</p>
+    </div>
+
+    <nav class="menu">
+      <a href="#destinos">Destinos</a>
+      <a href="#galeria">Galería</a>
+      <a href="#video">Promocional</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </header>
+
+
+  <!-- GALERÍA -->
+  <section id="galeria" class="seccion galeria">
+    <h2>Galería de imágenes</h2>
+    <div class="imagenes">
+      <a href="#Mares"><img src="img1.jpg" alt="Mar"></a>
+      <a href="#Ciudades"><img src="img2.jpg" alt="Ciudad"></a> 
+      <a href="#Monumentos"><img src="img3.jpg" alt="Monumentos"></a>
+      <a href="#Naturaleza"><img src="img4.jpg" alt="Naturaleza"></a>
+    </div>
+  </section>
+
+  <!-- 🌊 MARES -->
+  <section id="Mares" class="seccion mares">
+    <h2><img src="mares.png" alt="nombre-mares"></h2>
+    <div class="imagenes">
+      <a href="https://www.deturista.com/paquete/1772/paquete_a_cuba_cayo_santa_maria_varadero_y_la_habana.html" target="_blank"><img src="mar1.png" alt="Mar 1"></a>
+      <a href="https://www.deturista.com/paquete/1523/paquete_punta_cana__bayahibe_de_8_a_15_dias.html" target="_blank"><img src="mar2.png" alt="Mar 2"></a>
+      <a href="https://www.deturista.com/paquete/1962/paquete_en_oferta_-_buzios_imperdible.html" target="_blank"><img src="mar3.png" alt="Mar 3"></a>
+      <a href="https://www.deturista.com/paquete/1601/oferta_paquete_a_porto_seguro_all_inclusive_en_cuotas.html" target="_blank"><img src="mar4.png" alt="Mar 4"></a>
+      <a href="https://www.deturista.com/" target="_blank"><img src="flechader.png" alt="Ver más"></a>
+    </div>
+  </section>
+
+  <!-- 🌆 CIUDADES -->
+  <section id="Ciudades" class="seccion ciudades">
+    <h2><img src="ciudades.png" alt="nombre-ciudades"></h2>
+    <div class="imagenes">
+      <a href="https://www.deturista.com/paquete/1981/salida_grupal_italia_dorada_con_lo_mejor_de_espana_y.html" target="_blank"><img src="ciu1.png" alt="ciu 1"></a>
+      <a href="https://www.deturista.com/paquete/1924/gran_tour_de_espana_portugal_y_marruecos_-_salida_grupal.html" target="_blank"><img src="ciu2.png" alt="ciu 2"></a>
+      <a href="https://www.deturista.com/paquete/2131/paquete_-_la_gran_gira_iberica.html" target="_blank"><img src="ciu3.png" alt="ciu 3"></a>
+      <a href="https://www.deturista.com/paquete/2072/salida_grupal_acompanada_-_clasicos_de_corea_y_japon.html" target="_blank"><img src="ciu4.png" alt="ciu 4"></a>
+      <a href="https://www.deturista.com/" target="_blank"><img src="flechader.png" alt="Ver más"></a>
+    </div>
+  </section>
+
+  <!-- 🏛️ MONUMENTOS -->
+  <section id="Monumentos" class="seccion monumentos">
+    <h2><img src="monumentos.png" alt="nombre-monumentos"></h2>
+    <div class="imagenes">
+      <a href="https://www.deturista.com/paquete/2081/tour_maravillas_europeas_en_10_cuotas_-_no_incluye_vuelos.html" target="_blank"><img src="mon1.png" alt="mon 1"></a>
+      <a href="https://www.deturista.com/paquete/1884/salida_grupal_acompanada_%E2%80%93_europa_en_oferta_x_19_dias.html" target="_blank"><img src="mon2.png" alt="mon 2"></a>
+      <a href="https://www.deturista.com/paquete/2122/paquete_egipto_y_turquia_con_opcion_hurghada_all_inclusive.html" target="_blank"><img src="mon3.png" alt="mon 3"></a>
+      <a href="https://www.deturista.com/paquete/2127/salida_grupal_acompanada_-_china_y_hong_kong.html" target="_blank"><img src="mon4.png" alt="mon 4"></a>
+      <a href="https://www.deturista.com/" target="_blank"><img src="flechader.png" alt="Ver más"></a>
+    </div>
+  </section>
+
+  <!-- 🌳 NATURALEZA -->
+  <section id="Naturaleza" class="seccion Naturaleza">
+    <h2><img src="naturaleza.png" alt="nombre-naturaleza"></h2>
+    <div class="imagenes">
+      <a href="https://www.deturista.com/paquete/1179/paquete_a_ushuaia__el_calafate_combinado_en_cuotas.html" target="_blank"><img src="nat1.png" alt="nat 1"></a>
+      <a href="https://www.deturista.com/paquete/1463/paquete_a_iguazu_en_cuotas.html" target="_blank"><img src="nat2.png" alt="nat 2"></a>
+      <a href="https://www.deturista.com/paquete/724/paquete_a_salta_y_purmamarca_-_6_dias.html" target="_blank"><img src="nat3.png" alt="nat 3"></a>
+      <a href="https://www.deturista.com/paquete/139/sur_imperdible_el_calafate__el_chalten_en_cuotas.html" target="_blank"><img src="nat4.png" alt="nat 4"></a>
+      <a href="https://www.deturista.com/" target="_blank"><img src="flechader.png" alt="Ver más"></a>
+    </div>
+  </section>
+
+  <!-- 🎞️ VIDEO PROMOCIONAL -->
+  <section id="video" class="seccion">
+    <h2>Video Promocional</h2>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/tgbNymZ7vqY?si=Zz1PNHYri10aP52s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </section>
+
+  <!-- ✉️ CONTACTO -->
+  <section id="contacto" class="seccion">
+    <h2>Contacto</h2>
+    <form id="formulario">
+      <input type="text" id="nombre" placeholder="Nombre" required>
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="text" id="destino" placeholder="Destino favorito" required>
+      <textarea id="mensaje" placeholder="Mensaje" required></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+
+    <h3>Contactos guardados:</h3>
+    <ul id="lista-contactos"></ul>
+  </section>
+
+  <footer>
+    <p>© 2025 TravelNow - Todos los derechos reservados</p>
+  </footer>
